@@ -1,2 +1,2 @@
-### Merhaba 👋, Ben Cengizhan Topçu
+### Merhaba, Ben Cengizhan Topçu 👋
 
