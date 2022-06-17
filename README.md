@@ -1,1 +1,1 @@
-<h1 align="center">Cengizhan Topçu</h1> <h3 align="center">Mekatronik Mühendisi</h3> <p align="left"> <img src="https://komarev.com/ghpvc/?username=alkalemir&label=Profile%20views&color=0e75b6&style=flat" alt="alkalemir" /> </p>
+<h1 align="center">Cengizhan Topçu</h1> <h3 align="center">Mekatronik Mühendisi</h3> <p align="left">
