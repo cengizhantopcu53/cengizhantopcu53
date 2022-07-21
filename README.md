@@ -3,4 +3,4 @@
 
 Eğitim hayatım boyunca öğrendiğim teorik bilgi ile projelerden, yarışmalardan ve iş yerlerinden edindiğim tecrübeyle ülkemin menfaatlerini koruyarak ülkeme hizmet etmek istiyorum. Gömülü sistemlere ilgim olmakla birlikte bu alanda uzmanlaşmaya çalışıyorum. Geçen sene roket yarışması’nda yüksek irtifa kategorisinde finalist olduk ve atışımızı başarıyla gerçekleştirdik. Şu sıralar üç farklı irtifa roketi için çalışma yapıyoruz.
 
-Tüm sosyal medya hesaplarımıza [link](https://linktr.ee/cengizhantopcu53) üzerinden ulaşabilirsiniz.
+Tüm sosyal medya hesaplarıma [link](https://linktr.ee/cengizhantopcu53) üzerinden ulaşabilirsiniz.
