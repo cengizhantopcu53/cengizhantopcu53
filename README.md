@@ -5,4 +5,4 @@ Eğitim hayatım boyunca öğrendiğim teorik bilgi ile projelerden, yarışmala
 
 Tüm sosyal medya hesaplarıma [link](https://linktr.ee/cengizhantopcu53) üzerinden ulaşabilirsiniz.
 
-[Ferdi Ayhan](https://www.linkedin.com/in/ferdiayhann/) arkadaşımla 2022 yılında Atalay Roket Takımı olarak [kart tasarımı](https://github.com/atalayroket/atalay_karttasarimi) konusunda yaptığımız çalışmalara ulaşabilirsiniz.
+:electric_plug: Atalay Roket Takımı olarak 2022 yılında [Ferdi Ayhan](https://www.linkedin.com/in/ferdiayhann/) ile beraber [kart tasarımı](https://github.com/atalayroket/atalay_karttasarimi) konusunda yaptığımız çalışmalara ulaşabilirsiniz.
