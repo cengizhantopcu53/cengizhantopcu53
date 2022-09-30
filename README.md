@@ -3,6 +3,4 @@
 
 Eğitim hayatım boyunca öğrendiğim teorik bilgi ile projelerden, yarışmalardan ve iş yerlerinden edindiğim tecrübeyle ülkemin menfaatlerini koruyarak savunma sanayisinde hayata geçirilen projeler üzerinden gömülü sistemler konusunda çalışmalar yaparak ülkeme hizmet etmek istiyorum.
 
-Tüm sosyal medya hesaplarıma [link](https://linktr.ee/cengizhantopcu53) üzerinden ulaşabilirsiniz.
-
 :electric_plug: Atalay Roket Takımı olarak 2022 yılında [kart tasarımı](https://github.com/atalayroket/atalay_karttasarimi) konusunda yaptığımız çalışmalara ulaşabilirsiniz.
