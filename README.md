@@ -1,1 +1,1 @@
-:electric_plug: Atalay Roket Takımı olarak 2022 yılında [kart tasarımı](https://github.com/atalayroket/atalay_karttasarimi) ve [arayüz yazılımı](https://github.com/atalayroket/atalay_arayuzyazilimi) konusunda yaptığımız çalışmalara ulaşabilirsiniz.
+:electric_plug: Atalay Roket Takımı olarak 2022 yılında [kart tasarımı](https://github.com/atalayroket/atalay_karttasarimi) ve [arayüz](https://github.com/atalayroket/atalay_arayuz) konusunda yaptığımız çalışmalara ulaşabilirsiniz.
