@@ -8,3 +8,5 @@ C dili ile STM32 mikrodenetleyicilerini programlayarak uygulamalar yapabiliyorum
 <br>
 <br>
 Üniversite bünyesinde faaliyet gösteren Atalay Roket Takımı ile Teknofest'in düzenlediği Roket Yarışması'na katılıyorum. Dört senedir üç farklı kategoride toplam beş roket ile finalist olduk. Takımımda roketin [aviyonik sistemlerin](https://github.com/atalayroket/atalay_aviyoniksistem), uçuş bilgisayarı ile yer istasyonun [donanım tasarımı](https://github.com/atalayroket/atalay_donanimtasarimi), [gömülü yazılımı](https://github.com/atalayroket/atalay_gomuluyazilim) ve [arayüz](https://github.com/atalayroket/atalay_arayuz) konularında çalışmalar yapmaktayım.
+
+Tüm sosyal medya hesaplarıma [link](https://linktr.ee/cengizhantopcu53) üzerinden ulaşabilirsiniz.
