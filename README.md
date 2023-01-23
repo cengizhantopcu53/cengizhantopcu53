@@ -1,5 +1,5 @@
 <h1 align="center">CENGİZHAN TOPÇU</h1>
-<h3 align="center">MEKATRONİK MÜHENDİSİ</h3>
+<h3 align="center">GÖMÜLÜ SİSTEM MÜHENDİSİ</h3>
 
 Karabük Üniversitesi Mekatronik Mühendisliği bölümünden 2022 yılında mezun oldum. Eğitim hayatım boyunca öğrendiğim teorik bilgi ile projelerden ve iş yerlerinden edindiğim tecrübeyle disiplinler arası mühendis alanlarıyla uyumlu çalışarak gömülü sistemler konusunda kendimi geliştirmekteyim. 
 <br>
