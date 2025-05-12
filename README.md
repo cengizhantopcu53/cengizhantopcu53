@@ -13,12 +13,8 @@ Bu kapsamda, uzmanlık alanlarım doğrultusunda aşağıdaki konularda aktif ka
 
 Firmaların Ar-Ge Departmanı'nda görev aldığım süreçte;
 
-• Yazılım gereksinimlerini anlamak ve yönetilmesine destek olmak, <br>
+• Yazılım gereksinimlerin oluşturulması ve yönetilmesi, <br>
 • Yazılım tasarımına yönelik kodlama ve algoritma geliştirme çalışmalarına katkı sağlamak, <br>
 • Yazılım test ve doğrulama süreçlerinde görev almak, <br>
 • Tasarım geliştirme sürecinde diğer birimlerle iş birliği yapma, <br>
 • Yazılım dokümantasyonu oluşturma ve güncelleme çalışmalarına destek olma görevlerinde bulunuyorum. <br>
-
-Üniversite bünyesinde faaliyet gösteren [Atalay Roket Takımı](https://www.instagram.com/atalayroket/) ile Teknofest'in düzenlediği Roket Yarışması'nda üç farklı kategoride finalist olarak yarıştık. Takımımda roketin [aviyonik sistemlerin](https://github.com/atalayroket/atalay_aviyoniksistem), uçuş bilgisayarı ile yer istasyonun [donanım tasarımı](https://github.com/atalayroket/atalay_donanimtasarimi) ve [gömülü yazılımı](https://github.com/atalayroket/atalay_gomuluyazilim) konularında çalışmalar gerçekleştirdim.
-
-Üniversite dönemimde aldığım lisans ders notlarına ve gömülü sistemlere yönelik gerçekleştirdiğim çalışmalara aşağıdaki bağlantılardan ulaşabilirsiniz.
