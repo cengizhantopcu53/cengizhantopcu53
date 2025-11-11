@@ -190,6 +190,7 @@ window.addEventListener('scroll', () => {
 // Project filtering
 const filterButtons = document.querySelectorAll('.filter-btn');
 const projectCards = document.querySelectorAll('.project-card');
+const projectsFilter = document.querySelector('.projects-filter');
 
 filterButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -199,6 +200,13 @@ filterButtons.forEach(button => {
         button.classList.add('active');
 
         const filterValue = button.getAttribute('data-filter');
+
+        // Manage projects-filter state: if 'all' selected -> no has-selection,
+        // otherwise add has-selection so CSS can style non-active buttons as 'unselected'
+        if (projectsFilter) {
+            if (filterValue === 'all') projectsFilter.classList.remove('has-selection');
+            else projectsFilter.classList.add('has-selection');
+        }
 
         projectCards.forEach(card => {
             if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
@@ -424,58 +432,20 @@ function showLoadingScreen() {
     loadingScreen.id = 'loading-screen';
     loadingScreen.innerHTML = `
         <div class="loading-spinner">
-            <div class="spinner"></div>
+            <div class="spinner" aria-hidden="true"></div>
             <p>Yükleniyor...</p>
         </div>
     `;
-    
-    loadingScreen.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        flex-direction: column;
-    `;
-    
-    const spinnerStyle = document.createElement('style');
-    spinnerStyle.textContent = `
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #4f46e5;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .loading-spinner p {
-            color: #4f46e5;
-            font-weight: 500;
-        }
-    `;
-    
-    document.head.appendChild(spinnerStyle);
+    // Add to DOM (styles are provided by style.css; dark mode handled via body.dark)
     document.body.appendChild(loadingScreen);
-    
+
     // Hide loading screen after content loads
     window.addEventListener('load', () => {
         setTimeout(() => {
             loadingScreen.style.opacity = '0';
+            loadingScreen.style.transition = 'opacity 0.5s ease';
             setTimeout(() => {
-                loadingScreen.remove();
-                spinnerStyle.remove();
+                if (loadingScreen.parentNode) loadingScreen.remove();
             }, 500);
         }, 1000);
     });

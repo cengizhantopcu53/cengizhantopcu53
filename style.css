@@ -21,6 +21,9 @@
 	--shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
 	--border-radius: 12px;
 	--transition: all 0.3s ease;
+
+	/* underline color (light mode) -> use primary purple */
+	--underline-color: #4f46e5;
 }
 
 body {
@@ -68,6 +71,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    transition: color 0.25s ease, text-shadow 0.25s ease; /* smooth color transitions */
 }
 
 .nav-menu {
@@ -90,12 +94,19 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--gradient);
+    background: var(--underline-color);
     transition: var(--transition);
 }
 
+/* show underline on hover */
 .nav-link:hover::after {
     width: 100%;
+}
+
+/* keep underline visible for active nav link */
+.nav-link.active::after {
+    width: 100%;
+    background: var(--underline-color);
 }
 
 .nav-toggle {
@@ -129,6 +140,23 @@ body {
     background: transparent;
     border-radius: 8px;
     font-weight: 600;
+}
+
+/* Hover only for non-active language buttons */
+.lang-btn:not(.active):hover {
+    background: var(--primary-color);
+    color: var(--text-white);
+    transform: translateY(-1px);
+}
+
+/* Keep the selected language button visually at the default state (no highlighted background) */
+.lang-btn.active {
+    background: transparent !important;
+    color: var(--primary-color) !important;
+    box-shadow: none !important;
+    transform: none !important;
+    /* keep border to indicate button shape */
+    border-color: var(--primary-color);
 }
 
 .lang-btn:hover {
@@ -239,6 +267,22 @@ body {
     background: var(--primary-color);
     color: var(--text-white);
     transform: translateY(-2px);
+}
+
+/* Inverted primary button for dark mode only: light background + dark text; used for "Portfolyomu Gör" */
+body.dark .btn.btn-primary.btn-inverse {
+    background: rgba(255,255,255,0.95) !important;
+    color: #071124 !important;
+    border-color: rgba(0,0,0,0.06) !important;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+body.dark .btn.btn-primary.btn-inverse:hover,
+body.dark .btn.btn-primary.btn-inverse:focus {
+    background: rgba(255,255,255,0.85) !important;
+    color: #071124 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(2,6,23,0.12);
 }
 
 .social-links {
@@ -461,21 +505,43 @@ body {
     margin-bottom: 3rem;
 }
 
+/* Light-mode default: white background, purple border & text */
 .filter-btn {
     padding: 10px 25px;
     border: 2px solid var(--primary-color);
-    background: transparent;
-    color: var(--primary-color);
+    background: var(--bg-white);       /* white by default */
+    color: var(--primary-color);       /* purple text */
     border-radius: 25px;
     cursor: pointer;
     font-weight: 500;
     transition: var(--transition);
 }
 
-.filter-btn.active,
-.filter-btn:hover {
-    background: var(--primary-color);
-    color: var(--text-white);
+/* Hover and active: filled purple with white text (same visual) */
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary-color);  /* purple fill */
+    color: var(--text-white);          /* white text */
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* Remove muted/light-mode has-selection styling and enforce "Tümü" look
+   when a selection is made: non-active buttons stay white with purple border/text,
+   active button becomes filled purple with white text. */
+.projects-filter.has-selection .filter-btn {
+    background: var(--bg-white) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.projects-filter.has-selection .filter-btn.active {
+    background: var(--primary-color) !important;
+    color: var(--text-white) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 8px 24px rgba(79,70,229,0.12) !important;
 }
 
 .projects-grid {
@@ -726,19 +792,84 @@ body {
 
 /* ---------- DARK THEME VARIABLES (toggle by adding class "dark" to <body>) ---------- */
 body.dark {
-    /* palette overrides for dark mode */
-    --primary-color: #8b5cf6;
-    --secondary-color: #06b6d4;
-    --accent-color: #f59e0b;
+    /* palette overrides for dark mode: grey / off-white primary instead of purple */
+    --primary-color: #d7dde0;    /* soft light-gray (used for accents/highlights) */
+    --secondary-color: #9aa3ab;  /* muted medium-gray */
+    --accent-color: #f59e0b;     /* keep existing warm accent if needed */
     --text-dark: #e6eef8;
     --text-light: #cbd5e1;
     --text-white: #ffffff;
     --bg-dark: #020617;
-    --bg-light: #0f1724;
+    --bg-light: #071124;
     --bg-white: #071124;
-    --gradient: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+    /* subtle pale gradient for highlights in dark theme */
+    --gradient: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
     --shadow: 0 10px 25px rgba(2, 6, 23, 0.6);
     --shadow-lg: 0 20px 40px rgba(2, 6, 23, 0.7);
+
+    /* accessibility helpers for dark mode */
+    --button-hover-bg: rgba(255,255,255,0.12); /* use when hover produces a light-ish bg */
+    --on-light-text: #071124; /* dark text to show on light-ish hover backgrounds */
+
+    /* underline color in dark mode = white */
+    --underline-color: #ffffff;
+}
+
+/* Ensure nav logo is clearly visible in dark mode (avoid washed-out pale gradient) */
+body.dark .nav-logo a {
+    background: none;
+    background-image: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    color: var(--text-white) !important;           /* keep it white in dark mode */
+    text-shadow: none !important;                  /* avoid dark shadow hiding text */
+    opacity: 1 !important;
+    /* keep it crisp even if other scripts/styles run after theme toggle */
+}
+
+/* Nav links contrast in dark mode */
+body.dark .nav-link {
+    color: var(--text-light);
+}
+body.dark .nav-link::after {
+    background: linear-gradient(90deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+}
+
+/* Make hamburger bars visible in dark mode */
+body.dark .bar {
+    background: var(--text-white);
+}
+
+/* Language buttons / small buttons: if hover produces a light-ish background, switch to dark text for readability */
+body.dark .lang-btn:hover,
+body.dark .filter-btn:hover,
+body.dark .btn-secondary:hover {
+    background: var(--button-hover-bg);
+    color: var(--on-light-text);
+    border-color: transparent;
+}
+
+/* Ensure primary filled buttons still look good */
+body.dark .btn-primary {
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    color: var(--text-white);
+    box-shadow: var(--shadow);
+}
+body.dark .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Adjust theme-toggle hover color to avoid purple tint that may clash in dark mode */
+body.dark #theme-toggle:hover {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.06);
+}
+
+/* Project overlay tint in dark mode — keep subtle contrast */
+body.dark .project-overlay {
+    background: rgba(0, 0, 0, 0.45);
 }
 
 /* Smooth theme transitions */
@@ -1051,25 +1182,75 @@ html {
     animation: fadeInUp 0.8s ease forwards;
 }
 
-/* Utility Classes */
-.text-center {
-    text-align: center;
+/* Loading screen — light & dark variants */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    flex-direction: column;
+    background: rgba(255,255,255,1);
+    transition: background-color 0.25s ease, opacity 0.3s ease;
 }
 
-.text-left {
-    text-align: left;
+#loading-screen .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0,0,0,0.08);
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+    margin-left: 6px;
 }
 
-.text-right {
-    text-align: right;
+#loading-screen .loading-spinner p {
+    color: var(--primary-color);
+    font-weight: 500;
 }
 
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-3 { margin-bottom: 1.5rem; }
-.mb-4 { margin-bottom: 2rem; }
+/* Dark mode override for loading screen */
+body.dark #loading-screen {
+    background: var(--bg-dark);
+}
 
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mt-4 { margin-top: 2rem; }
+body.dark #loading-screen .spinner {
+    border: 5px solid rgba(255,255,255,0.06);
+    border-top: 5px solid var(--text-white);
+}
+
+body.dark #loading-screen .loading-spinner p {
+    color: var(--text-white);
+}
+
+/* Centering tweak: remove block-level nudge and nudge only the circular spinner */
+#loading-screen .loading-spinner {
+    /* remove previous translateX nudge so text stays truly centered */
+    transform: none;
+    transition: transform 0.25s ease;
+}
+
+/* Nudge spinner a bit to the right relative to centered text */
+#loading-screen .spinner {
+    margin-left: 6px;
+    /* keep existing sizing/animation (no other changes) */
+}
+
+/* Ensure dark mode uses same spinner offset */
+body.dark #loading-screen .loading-spinner {
+    transform: none;
+}
+body.dark #loading-screen .spinner {
+    margin-left: 6px;
+}
+
+/* Spinner keyframes (ensure available in CSS) */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
