@@ -86,8 +86,8 @@ function initThemeToggle() {
     if (saved === 'dark') setThemeState(true);
     else if (saved === 'light') setThemeState(false);
     else {
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        setThemeState(prefersDark);
+        // No saved preference -> default to dark mode
+        setThemeState(true);
     }
 
     // click handler

@@ -6,20 +6,21 @@
 }
 
 :root {
-    --primary-color: #4f46e5;
-    --secondary-color: #06b6d4;
-    --accent-color: #f59e0b;
-    --text-dark: #1f2937;
-    --text-light: #6b7280;
-    --text-white: #ffffff;
-    --bg-dark: #111827;
-    --bg-light: #f9fafb;
-    --bg-white: #ffffff;
-    --gradient: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
-    --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
-    --border-radius: 12px;
-    --transition: all 0.3s ease;
+	/* palette updated: Teal & Coral */
+	--primary-color: #4f46e5;
+	--secondary-color: #06b6d4;
+	--accent-color: #f59e0b;
+	--text-dark: #1f2937;
+	--text-light: #6b7280;
+	--text-white: #ffffff;
+	--bg-dark: #111827;
+	--bg-light: #f9fafb;
+	--bg-white: #ffffff;
+	--gradient: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+	--shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+	--shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
+	--border-radius: 12px;
+	--transition: all 0.3s ease;
 }
 
 body {
@@ -729,12 +730,12 @@ body.dark {
     --primary-color: #8b5cf6;
     --secondary-color: #06b6d4;
     --accent-color: #f59e0b;
-    --text-dark: #e6eef8;     /* main text on dark bg */
-    --text-light: #cbd5e1;    /* secondary text */
+    --text-dark: #e6eef8;
+    --text-light: #cbd5e1;
     --text-white: #ffffff;
-    --bg-dark: #020617;       /* page darkest bg */
-    --bg-light: #0f1724;      /* card / section bg */
-    --bg-white: #071124;      /* used where previously white */
+    --bg-dark: #020617;
+    --bg-light: #0f1724;
+    --bg-white: #071124;
     --gradient: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
     --shadow: 0 10px 25px rgba(2, 6, 23, 0.6);
     --shadow-lg: 0 20px 40px rgba(2, 6, 23, 0.7);
@@ -1017,7 +1018,7 @@ body.dark #theme-toggle .icon-moon { display: none; }
     }
 }
 
-@keyframes fadeInLeft {
+@keyanimations fadeInLeft {
     from {
         opacity: 0;
         transform: translateX(-30px);
@@ -1028,7 +1029,7 @@ body.dark #theme-toggle .icon-moon { display: none; }
     }
 }
 
-@keyframes fadeInRight {
+@keyanimations fadeInRight {
     from {
         opacity: 0;
         transform: translateX(30px);
