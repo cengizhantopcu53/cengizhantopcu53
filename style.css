@@ -103,9 +103,11 @@ body {
     cursor: pointer;
 }
 
+/* Language Selector */
 .language-selector {
     display: flex;
     gap: 0.5rem;
+    align-items: center;
 }
 
 .lang-btn {
@@ -119,6 +121,13 @@ body {
     font-size: 0.9rem;
     transition: var(--transition);
     min-width: 45px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 6px 10px;
+    background: transparent;
+    border-radius: 8px;
+    font-weight: 600;
 }
 
 .lang-btn:hover {
@@ -131,6 +140,8 @@ body {
     background: var(--primary-color);
     color: var(--text-white);
     box-shadow: 0 2px 10px rgba(79, 70, 229, 0.3);
+    /* active state keeps previous styles but ensure contrast */
+    box-shadow: 0 2px 10px rgba(79, 70, 229, 0.18);
 }
 
 .bar {
@@ -710,6 +721,159 @@ body {
 
 .footer-bottom p {
     color: #9ca3af;
+}
+
+/* ---------- DARK THEME VARIABLES (toggle by adding class "dark" to <body>) ---------- */
+body.dark {
+    /* palette overrides for dark mode */
+    --primary-color: #8b5cf6;
+    --secondary-color: #06b6d4;
+    --accent-color: #f59e0b;
+    --text-dark: #e6eef8;     /* main text on dark bg */
+    --text-light: #cbd5e1;    /* secondary text */
+    --text-white: #ffffff;
+    --bg-dark: #020617;       /* page darkest bg */
+    --bg-light: #0f1724;      /* card / section bg */
+    --bg-white: #071124;      /* used where previously white */
+    --gradient: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+    --shadow: 0 10px 25px rgba(2, 6, 23, 0.6);
+    --shadow-lg: 0 20px 40px rgba(2, 6, 23, 0.7);
+}
+
+/* Smooth theme transitions */
+body, .navbar, .profile-card, .project-card, .skill-category, .contact-form, .about-text, .project-content {
+    transition: background-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+/* ---------- SPECIFIC OVERRIDES FOR EXISTING RULES THAT USED EXPLICIT LIGHT COLORS ---------- */
+
+/* Navbar: make semi-transparent dark in dark mode */
+body.dark .navbar {
+    background: rgba(7, 10, 18, 0.85);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Mobile nav/menu background uses var(--bg-white) so will adapt via variables.
+   But explicit top-fixed language selector position looks fine; colors adapt via variables. */
+
+/* Hero: replace light gradient with darker one */
+body.dark .hero {
+    background: linear-gradient(135deg, #071124 0%, #0b1520 100%);
+}
+
+/* Profile image glow using gradient variable (already uses var(--gradient)) will adapt.
+   If explicit override needed for stronger contrast: */
+body.dark .profile-image::before {
+    background: var(--gradient);
+    filter: brightness(1.05);
+}
+
+/* Project overlay darker tint */
+body.dark .project-overlay {
+    background: rgba(2, 6, 23, 0.85);
+}
+
+/* Skill items hover: ensure icons contrast on dark */
+body.dark .skill-item {
+    background: #0b1320;
+    color: var(--text-light);
+}
+body.dark .skill-item:hover {
+    background: var(--primary-color);
+    color: var(--text-white);
+}
+
+/* Contact form and inputs */
+body.dark .contact-form {
+    background: #071124;
+    box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    color: var(--text-light);
+}
+body.dark .form-group input,
+body.dark .form-group textarea {
+    background: #06101a;
+    color: var(--text-white);
+    border: 1px solid #172033;
+}
+
+/* Footer */
+body.dark .footer {
+    background: #010417;
+    color: var(--text-white);
+}
+body.dark .footer-section p,
+body.dark .footer-section ul li a,
+body.dark .footer-bottom p {
+    color: #9ca3af;
+}
+
+/* Links and buttons adjust automatically via variables; force subtle borders if needed */
+body.dark .filter-btn,
+body.dark .lang-btn {
+    border-color: rgba(255,255,255,0.08);
+    color: var(--text-light);
+}
+
+/* Ensure social/project link backgrounds contrast on dark */
+body.dark .social-link,
+body.dark .project-link {
+    background: #071124;
+    color: var(--primary-color);
+}
+
+/* Small tweak for inputs focus in dark */
+body.dark .form-group input:focus,
+body.dark .form-group textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 6px 18px rgba(124,58,237,0.12);
+}
+
+/* Theme toggle button (place inside .nav-container) */
+#theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 36px;
+    padding: 6px;
+    border-radius: 12px;
+    background: transparent;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.15s ease, border-color 0.25s ease;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--text-dark);
+}
+#theme-toggle:hover {
+    transform: translateY(-2px);
+    background: rgba(79, 70, 229, 0.06);
+    border-color: rgba(79, 70, 229, 0.12);
+}
+
+/* Icon variants */
+#theme-toggle .icon-sun { display: none; }
+#theme-toggle .icon-moon { display: inline-block; }
+
+/* When dark mode active, show sun icon and adjust colors */
+body.dark #theme-toggle {
+    color: var(--text-light);
+    background: rgba(255,255,255,0.02);
+    border-color: rgba(255,255,255,0.04);
+}
+body.dark #theme-toggle .icon-sun { display: inline-block; }
+body.dark #theme-toggle .icon-moon { display: none; }
+
+/* Keep toggle visible on small screens (align with language selector) */
+@media (max-width: 768px) {
+    /* If navbar uses .nav-menu overlay on mobile, place toggle near .language-selector */
+    #theme-toggle {
+        position: fixed;
+        top: 18px;
+        right: 80px; /* adjust if language-selector exists */
+        z-index: 1002;
+    }
 }
 
 /* Responsive Design */

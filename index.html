@@ -22,9 +22,44 @@
                 <a href="#contact" class="nav-link" data-tr="İletişim" data-en="Contact">İletişim</a>
             </div>
             <div class="language-selector">
-                <button class="lang-btn active" data-lang="tr">TR</button>
-                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn active" data-lang="tr" aria-label="Türkçe">
+                    <!-- Turkey flag (inline SVG) - crescent + star -->
+                    <span class="flag" aria-hidden="true">
+                        <svg width="20" height="14" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                            <!-- red background -->
+                            <rect width="30" height="20" fill="#e30a17"/>
+                            <!-- white circle for crescent base -->
+                            <circle cx="12" cy="10" r="5.6" fill="#ffffff"/>
+                            <!-- red circle to carve crescent -->
+                            <circle cx="14.2" cy="10" r="4.8" fill="#e30a17"/>
+                            <!-- star (five-point) moved slightly up -->
+                            <polygon points="20,6.5 21.2,9.5 24,10 21.5,11.7 22.2,14.5 20,12.7 17.8,14.5 18.5,11.7 16,10 18.8,9.5"
+                                     fill="#ffffff"/>
+                        </svg>
+                    </span>
+                    <span class="lang-label">TR</span>
+                </button>
+                <button class="lang-btn" data-lang="en" aria-label="English">
+                    <!-- US/UK style simple flag (inline SVG) -->
+                    <span class="flag" aria-hidden="true">
+                        <svg width="20" height="14" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" role="img">
+                            <rect width="60" height="30" fill="#012169"/>
+                            <path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" stroke-width="4"/>
+                            <path d="M0 0 L60 30 M60 0 L0 30" stroke="#c8102e" stroke-width="2"/>
+                            <rect x="24" width="12" height="30" fill="#fff"/>
+                            <rect y="9" width="60" height="12" fill="#fff"/>
+                            <rect x="26" width="8" height="30" fill="#c8102e"/>
+                            <rect y="11" width="60" height="8" fill="#c8102e"/>
+                        </svg>
+                    </span>
+                    <span class="lang-label">EN</span>
+                </button>
             </div>
+                        <!-- added theme toggle button -->
+            <button id="theme-toggle" aria-label="Tema değiştir" title="Tema değiştir">
+                <span class="icon-moon">🌙</span>
+                <span class="icon-sun">☀️</span>
+            </button>
             <div class="nav-toggle" id="nav-toggle">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -71,7 +106,7 @@
                     <p data-tr="Eğitim hayatım boyunca öğrendiğim teorik bilgi ile projelerden ve iş yerlerinden edindiğim tecrübeyle disiplinler arası mühendis alanlarıyla uyumlu çalışarak gömülü yazılım konusunda kendimi geliştirmekteyim."
                     data-en="With the theoretical knowledge I have gained throughout my education and the experience I have acquired from projects and workplaces, I continue to improve myself in embedded software, working in harmony with interdisciplinary engineering fields."></p>
                     <p data-tr="Ar-Ge odaklı, yenilikçi çözümler geliştiren şirketlerde mühendislik süreçlerine katkı sağlayarak inovatif ürünlerin hayata geçirilmesine destek veriyorum."
-                    data-en="I contribute to engineering processes in R&D-focused, innovative companies and support the realization of innovative products."></p>
+                    data-en="I contribute to engineering processes in R&D focused, innovative companies and support the realization of innovative products."></p>
                     <p data-tr="Firmaların Ar-Ge Departmanı'nda görev aldığım süreçte;"
                     data-en="During my time working in the R&D departments of companies:">
                     <p data-tr="• Yazılım gereksinimlerin oluşturulması ve yönetilmesi,"

@@ -1,11 +1,13 @@
-// Navigation Toggle
+// Navigation Toggle (null-safe)
 const navToggle = document.getElementById('nav-toggle');
 const navMenu = document.getElementById('nav-menu');
 
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    navToggle.classList.toggle('active');
-});
+if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+    });
+}
 
 // Language switching functionality
 let currentLanguage = 'tr';
@@ -56,11 +58,96 @@ document.addEventListener('DOMContentLoaded', () => {
     switchLanguage(savedLanguage);
 });
 
-// Close mobile menu when clicking on a link
+/* ---------- THEME TOGGLE (consolidated into script.js) ---------- */
+/* - Controls body.dark
+   - Persists choice to localStorage
+   - Reacts to system preference changes
+   - Updates toggle button aria and icons
+*/
+
+function setThemeState(isDark) {
+    document.body.classList.toggle('dark', !!isDark);
+    try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) {}
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+        btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+        const sun = btn.querySelector('.icon-sun');
+        const moon = btn.querySelector('.icon-moon');
+        if (sun) sun.style.display = isDark ? 'inline-block' : 'none';
+        if (moon) moon.style.display = isDark ? 'none' : 'inline-block';
+    }
+    updateNavbarOnScroll();
+}
+
+function initThemeToggle() {
+    // determine initial theme: localStorage -> system -> light
+    let saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) { saved = null; }
+    if (saved === 'dark') setThemeState(true);
+    else if (saved === 'light') setThemeState(false);
+    else {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setThemeState(prefersDark);
+    }
+
+    // click handler
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+        btn.addEventListener('click', () => {
+            const isDark = document.body.classList.toggle('dark');
+            setThemeState(isDark);
+        });
+    }
+
+    // listen to system preference changes and update only if user has no explicit choice
+    if (window.matchMedia) {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        mq.addEventListener && mq.addEventListener('change', (e) => {
+            // apply only if no saved preference
+            let savedPref = null;
+            try { savedPref = localStorage.getItem('theme'); } catch (err) { savedPref = null; }
+            if (!savedPref) {
+                setThemeState(e.matches);
+            }
+        });
+    }
+}
+
+// initialize on DOM ready
+document.addEventListener('DOMContentLoaded', initThemeToggle);
+
+/* ---------- Navbar background on scroll (theme-aware & null-safe) ---------- */
+function updateNavbarOnScroll() {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+    const isDark = document.body.classList.contains('dark');
+    if (window.scrollY > 100) {
+        if (isDark) {
+            navbar.style.background = 'rgba(7, 10, 18, 0.9)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.6)';
+        } else {
+            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
+        }
+    } else {
+        if (isDark) {
+            navbar.style.background = 'rgba(7, 10, 18, 0.85)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.6)';
+        } else {
+            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        }
+    }
+}
+
+window.addEventListener('scroll', updateNavbarOnScroll);
+window.addEventListener('load', updateNavbarOnScroll);
+
+// Close mobile menu when clicking on a link (null-safe)
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
+        if (navMenu) navMenu.classList.remove('active');
+        if (navToggle) navToggle.classList.remove('active');
     });
 });
 
@@ -76,18 +163,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
-});
-
-// Navbar background on scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    }
 });
 
 // Active navigation link highlighting
@@ -136,48 +211,54 @@ filterButtons.forEach(button => {
     });
 });
 
-// Contact form handling
+// Contact form handling (null-safe)
 const contactForm = document.querySelector('.contact-form');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = new FormData(contactForm);
-    const name = contactForm.querySelector('input[type="text"]').value;
-    const email = contactForm.querySelector('input[type="email"]').value;
-    const subject = contactForm.querySelectorAll('input[type="text"]')[1].value;
-    const message = contactForm.querySelector('textarea').value;
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Get form data
+        const nameEl = contactForm.querySelector('input[type="text"]');
+        const emailEl = contactForm.querySelector('input[type="email"]');
+        const subjectEls = contactForm.querySelectorAll('input[type="text"]');
+        const textareaEl = contactForm.querySelector('textarea');
 
-    // Get translation messages
-    const messages = {
-        tr: {
-            fillFields: 'Lütfen tüm alanları doldurun!',
-            validEmail: 'Geçerli bir e-posta adresi girin!',
-            success: 'Mesajınız gönderildi! En kısa sürede dönüş yapacağım.'
-        },
-        en: {
-            fillFields: 'Please fill in all fields!',
-            validEmail: 'Please enter a valid email address!',
-            success: 'Your message has been sent! I will get back to you soon.'
+        const name = nameEl ? nameEl.value : '';
+        const email = emailEl ? emailEl.value : '';
+        const subject = subjectEls && subjectEls[1] ? subjectEls[1].value : '';
+        const message = textareaEl ? textareaEl.value : '';
+
+        // Get translation messages
+        const messages = {
+            tr: {
+                fillFields: 'Lütfen tüm alanları doldurun!',
+                validEmail: 'Geçerli bir e-posta adresi girin!',
+                success: 'Mesajınız gönderildi! En kısa sürede dönüş yapacağım.'
+            },
+            en: {
+                fillFields: 'Please fill in all fields!',
+                validEmail: 'Please enter a valid email address!',
+                success: 'Your message has been sent! I will get back to you soon.'
+            }
+        };
+
+        // Simple validation
+        if (!name || !email || !subject || !message) {
+            showNotification(messages[currentLanguage].fillFields, 'error');
+            return;
         }
-    };
 
-    // Simple validation
-    if (!name || !email || !subject || !message) {
-        showNotification(messages[currentLanguage].fillFields, 'error');
-        return;
-    }
+        if (!isValidEmail(email)) {
+            showNotification(messages[currentLanguage].validEmail, 'error');
+            return;
+        }
 
-    if (!isValidEmail(email)) {
-        showNotification(messages[currentLanguage].validEmail, 'error');
-        return;
-    }
-
-    // Simulate form submission
-    showNotification(messages[currentLanguage].success, 'success');
-    contactForm.reset();
-});
+        // Simulate form submission
+        showNotification(messages[currentLanguage].success, 'success');
+        contactForm.reset();
+    });
+}
 
 // Email validation function
 function isValidEmail(email) {
