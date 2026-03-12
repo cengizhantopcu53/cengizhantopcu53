@@ -89,13 +89,30 @@
             </div>
             <div class="hero-image">
                 <div class="profile-card">
-                    <div class="profile-image">
-                        <img src="./Docs/image/profile-image.jpeg" alt="Profil Fotoğrafı">
+                    <!-- Story / profile with clickable story ring -->
+                    <div class="story-wrapper">
+                        <button class="story-ring" id="open-stories" aria-label="Hikayeleri Aç">
+                            <img src="./Docs/image/profile-image.jpeg" alt="Profil Fotoğrafı">
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Stories Modal (hidden by default) -->
+    <div id="story-modal" class="story-modal" aria-hidden="true">
+        <div class="story-backdrop" id="story-backdrop"></div>
+        <div class="story-content" role="dialog" aria-modal="true" aria-label="Hikaye Görüntüleyici">
+            <button class="story-close" id="story-close" aria-label="Kapat">×</button>
+            <button class="story-prev" id="story-prev" aria-label="Önceki">‹</button>
+            <div class="story-image-wrap">
+                <div id="story-media" tabindex="0" aria-live="polite"></div>
+            </div>
+            <button class="story-next" id="story-next" aria-label="Sonraki">›</button>
+            <div class="story-counter" id="story-counter"></div>
+        </div>
+    </div>
 
     <!-- About Section -->
     <section id="about" class="about">

@@ -533,3 +533,188 @@ function lazyLoadImages() {
 
 // Initialize lazy loading
 document.addEventListener('DOMContentLoaded', lazyLoadImages);
+
+/* ---------- Stories (Instagram-like) ---------- */
+(() => {
+    // Stories list: supports both images and videos. Update paths as needed.
+    const stories = [
+        { type: 'image', src: './Docs/image/image-15.png' },
+        { type: 'image', src: './Docs/image/image-16.png' },
+        { type: 'video', src: './Docs/video/video-1.mp4' },
+        { type: 'image', src: './Docs/image/image-17.png' },
+        { type: 'video', src: './Docs/video/video-2.mp4' },
+        { type: 'image', src: './Docs/image/image-18.png' },
+        { type: 'image', src: './Docs/image/image-19.png' },
+        { type: 'image', src: './Docs/image/image-20.png' },
+        { type: 'image', src: './Docs/image/image-21.png' },
+        { type: 'image', src: './Docs/image/image-22.png' },
+        { type: 'image', src: './Docs/image/image-23.png' },
+        { type: 'image', src: './Docs/image/image-24.png' },
+        { type: 'image', src: './Docs/image/image-25.png' },
+        { type: 'image', src: './Docs/image/image-26.png' },
+        { type: 'image', src: './Docs/image/image-27.png' },
+        { type: 'image', src: './Docs/image/image-28.png' }
+    ];
+
+    let currentIndex = 0;
+
+    const openBtn = document.getElementById('open-stories');
+    const modal = document.getElementById('story-modal');
+    const backdrop = document.getElementById('story-backdrop');
+    const closeBtn = document.getElementById('story-close');
+    const prevBtn = document.getElementById('story-prev');
+    const nextBtn = document.getElementById('story-next');
+    const mediaContainer = document.getElementById('story-media');
+    const counterEl = document.getElementById('story-counter');
+
+    function clearMedia() {
+        if (!mediaContainer) return;
+        const existingVideo = mediaContainer.querySelector('video');
+        if (existingVideo) {
+            try { existingVideo.pause(); } catch (e) {}
+        }
+        mediaContainer.innerHTML = '';
+    }
+
+    function showStory(index) {
+        if (!mediaContainer) return;
+        currentIndex = (index + stories.length) % stories.length;
+        const item = stories[currentIndex];
+        counterEl.textContent = `${currentIndex + 1} / ${stories.length}`;
+        clearMedia();
+
+        if (item.type === 'video') {
+            const v = document.createElement('video');
+            v.src = item.src;
+            v.autoplay = true;
+            v.muted = true; // start muted to allow autoplay across browsers
+            v.playsInline = true;
+            v.controls = false;
+            v.preload = 'metadata';
+            v.style.width = '100%';
+            v.style.height = '100%';
+            v.style.objectFit = 'contain';
+            v.setAttribute('aria-label', `Hikaye video ${currentIndex + 1}`);
+            mediaContainer.appendChild(v);
+            // attempt to play (may return a promise)
+            v.play().catch(() => {});
+
+            // toggle play/pause on click
+            v.addEventListener('click', () => {
+                if (lensSize === 100) openZoomFull(item);
+                else if (v.paused) v.play(); else v.pause();
+            });
+        } else {
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.alt = `Hikaye ${currentIndex + 1}`;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'contain';
+            mediaContainer.appendChild(img);
+            img.addEventListener('click', () => {
+                if (lensSize === 100) openZoomFull(item);
+            });
+        }
+    }
+
+    /* ---------- Zoom / Fullscreen logic ---------- */
+    const lensSize = 100; // set desired magnifier size; when 100 => fullscreen zoom on click
+
+    // create fullscreen zoom overlay (lazy)
+    let zoomOverlay = null;
+
+    function ensureZoomOverlay() {
+        if (zoomOverlay) return zoomOverlay;
+        zoomOverlay = document.createElement('div');
+        zoomOverlay.className = 'zoom-fullscreen';
+        zoomOverlay.innerHTML = `
+            <button class="zoom-close" aria-label="Kapat">×</button>
+            <div class="zoom-inner"></div>
+        `;
+        document.body.appendChild(zoomOverlay);
+        // close handlers
+        zoomOverlay.addEventListener('click', (e) => {
+            if (e.target === zoomOverlay || e.target.classList.contains('zoom-close')) closeZoomFull();
+        });
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeZoomFull();
+        });
+        return zoomOverlay;
+    }
+
+    function openZoomFull(item) {
+        const overlay = ensureZoomOverlay();
+        const inner = overlay.querySelector('.zoom-inner');
+        inner.innerHTML = '';
+        if (item.type === 'video') {
+            const v = document.createElement('video');
+            v.src = item.src;
+            v.controls = true;
+            v.autoplay = true;
+            v.muted = true; // start muted to allow autoplay; user can unmute with controls
+            v.playsInline = true;
+            v.className = 'zoom-media';
+            inner.appendChild(v);
+            v.play().catch(() => {});
+        } else {
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.alt = 'Zoomed image';
+            img.className = 'zoom-media';
+            inner.appendChild(img);
+        }
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeZoomFull() {
+        if (!zoomOverlay) return;
+        zoomOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+        const media = zoomOverlay.querySelector('.zoom-media');
+        if (media && media.tagName === 'VIDEO') {
+            try { media.pause(); } catch (e) {}
+        }
+    }
+
+    function openStories(startIndex = 0) {
+        showStory(startIndex);
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        // trap focus could be added later; for now focus the displayed media if possible
+        const firstMedia = mediaContainer && mediaContainer.firstElementChild;
+        if (firstMedia && typeof firstMedia.focus === 'function') firstMedia.focus();
+    }
+
+    function closeStories() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
+    if (openBtn) openBtn.addEventListener('click', () => openStories(0));
+    if (closeBtn) closeBtn.addEventListener('click', closeStories);
+    if (backdrop) backdrop.addEventListener('click', closeStories);
+    if (prevBtn) prevBtn.addEventListener('click', () => showStory(currentIndex - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => showStory(currentIndex + 1));
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('open')) return;
+        if (e.key === 'ArrowLeft') showStory(currentIndex - 1);
+        if (e.key === 'ArrowRight') showStory(currentIndex + 1);
+        if (e.key === 'Escape') closeStories();
+    });
+
+    // preload media for smoother experience
+    stories.forEach(item => {
+        if (item.type === 'image') {
+            const img = new Image(); img.src = item.src;
+        } else if (item.type === 'video') {
+            // create a short-lived video element to hint the browser to preload metadata
+            const v = document.createElement('video');
+            v.preload = 'metadata';
+            v.src = item.src;
+        }
+    });
+})();
